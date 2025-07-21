@@ -1,0 +1,25 @@
+# Bỏ qua node_modules ở cả frontend và backend
+node_modules/
+backend/node_modules/
+be/node_modules/
+fe/node_modules/
+
+# Bỏ qua file .env
+.env
+backend/.env
+be/.env
+fe/.env
+fe\.env
+
+# Bỏ qua file log
+*.log
+
+# Bỏ qua build output nếu có
+frontend/dist/
+backend/dist/
+frontend/build/
+backend/build/
+
+# Mac & VSCode junk
+.DS_Store
+.vscode/
