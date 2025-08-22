@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Home from "../views/Home/index";
 import Login from "../views/Authorization/login";
 import Register from "../views/Authorization/register";
+import Contact from "../views/Contact/contact";
 
 
 const Layout = () => (
@@ -24,22 +25,46 @@ const AuthLayout = () => (
     </main>
 );
 
-const RouterUser = () => (
-    <Routes>
-        {/* Auth routes: không có header/footer */}
-        <Route element={<AuthLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-        </Route>
-        {/* Main layout: có header/footer */}
-        <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            {/* Thêm các route khác ở đây */}
-            {/* <Route path="/products" element={<ProductListingPage />} />
-            <Route path="/products/:id" element={<ProductDetailPage />} /> */}
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+    }
 
-        </Route>
-    </Routes>
-);
+    static getDerivedStateFromError(error) {
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {
+        console.log('Routing error:', error, errorInfo);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return <h1>Something went wrong.</h1>;
+        }
+
+        return this.props.children;
+    }
+}
+
+const RouterUser = () => {
+    return (
+        <ErrorBoundary>
+            <Routes>
+                {/* Auth routes: không có header/footer */}
+                <Route element={<AuthLayout />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+                {/* Main layout: có header/footer */}
+                <Route element={<Layout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/contact" element={<Contact />} />
+                </Route>
+            </Routes>
+        </ErrorBoundary>
+    );
+};
 
 export default RouterUser;
